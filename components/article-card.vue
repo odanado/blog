@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
+import Vue, { PropType } from 'vue';
 
 export type Article = {
   title: string;
@@ -30,9 +30,9 @@ export default Vue.extend({
     }
   },
   mounted () {
-    console.log(this.article)
+    console.log(this.article);
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>

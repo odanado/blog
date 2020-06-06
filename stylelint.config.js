@@ -4,4 +4,4 @@ module.exports = {
     'stylelint-config-property-sort-order-smacss',
     'stylelint-scss'
   ]
-}
+};
