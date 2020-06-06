@@ -26,7 +26,6 @@ export default Vue.extend({
   computed: {
     articles (): Article[] {
       return this.contents.map((content) => {
-        console.log('poyo', JSON.stringify(content))
         return {
           title: content.title,
           publishAt: format(content.publishAt, 'yyyy-MM-dd'),

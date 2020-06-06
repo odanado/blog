@@ -12,7 +12,6 @@ export default Vue.extend({
     const path = ['articles', year, month, slug].join('/')
     const content = await app.$content(path).fetch()
 
-    console.log(content)
     return { content }
   }
 })
