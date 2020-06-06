@@ -1,4 +1,5 @@
 
+/** @type {import('@nuxt/types').Configuration} */
 export default {
   mode: 'universal',
   /*
@@ -23,6 +24,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@exampledev/new.css/new.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -41,6 +43,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxt/content'
   ],
   /*
   ** Build configuration

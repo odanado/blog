@@ -1,73 +1,44 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        blog
-      </h1>
-      <h2 class="subtitle">
-        my blog
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <article-card v-for="article in articles" :key="article.dir" :article="article" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Logo from '~/components/Logo.vue'
+import { format } from 'date-fns'
+import ArticleCard, { Article } from '../components/article-card.vue'
 
 export default Vue.extend({
   components: {
-    Logo
+    ArticleCard
+  },
+  async asyncData (app) {
+    const contents = await app.$content('articles', { deep: true }).sortBy('publishAt', 'desc').fetch()
+    return { contents }
+  },
+  data () {
+    return {
+      // TODO: fix type
+      contents: [] as any[]
+    }
+  },
+  computed: {
+    articles (): Article[] {
+      return this.contents.map((content) => {
+        console.log('poyo', JSON.stringify(content))
+        return {
+          title: content.title,
+          publishAt: format(content.publishAt, 'yyyy-MM-dd'),
+          path: content.path,
+          body: content.body
+        }
+      })
+    }
   }
 })
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
