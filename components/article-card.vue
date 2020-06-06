@@ -28,9 +28,6 @@ export default Vue.extend({
       type: Object as PropType<Article>,
       required: true
     }
-  },
-  mounted () {
-    console.log(this.article);
   }
 });
 </script>
