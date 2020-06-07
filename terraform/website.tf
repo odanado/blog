@@ -1,5 +1,5 @@
 data "aws_acm_certificate" "acm" {
-  provider = aws.us-east-1
+  provider = aws.virginia
   domain   = local.acm_certificate_domain
 }
 
@@ -72,6 +72,13 @@ resource "aws_cloudfront_distribution" "site" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+    compress               = true
+
+
+    lambda_function_association {
+      event_type = "viewer-request"
+      lambda_arn = "${aws_lambda_function.lambda_edge.arn}:${aws_lambda_function.lambda_edge.version}"
+    }
   }
 
   restrictions {

@@ -25,7 +25,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    publishedAt () {
+    publishedAt (): string {
       return format(this.article.publishedAt, 'yyyy-MM-dd');
     }
   }

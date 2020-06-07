@@ -33,7 +33,7 @@ export class ArticleRepository {
     return {
       title: page.title,
       publishedAt: typeof page.publishedAt === 'string' ? new Date(page.publishedAt) : page.publishedAt,
-      path: page.path,
+      path: page.path.endsWith('/') ? page.path : `${page.path}/`,
       body: page.body,
       bodyText: this._getBodyText(page.body)
     };

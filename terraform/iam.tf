@@ -33,8 +33,8 @@ data "aws_iam_policy_document" "deploy_policy_document" {
 }
 
 resource "aws_iam_user_policy" "deployer" {
-  name = "site-${local.domain}-deployer-policy"
-  user = aws_iam_user.deployer.id
+  name   = "site-${local.domain}-deployer-policy"
+  user   = aws_iam_user.deployer.id
   policy = data.aws_iam_policy_document.deploy_policy_document.json
 }
 
