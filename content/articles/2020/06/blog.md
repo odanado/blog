@@ -44,6 +44,37 @@ const page = await app.$content('articles/2020/06/blog').fetch()
 ## new.css の導入
 今回は [new.css](https://newcss.net/) を導入しました。new.css は CSS フレームワークで、html のタグにモダンな見た目になるように CSS を当ててくれます。ブログの構築を急いだのでこれを採用しました。後で余裕ができたら自分で CSS を書いてデザインを当てたいと考えています。
 
+##  Lambda@Edge の用意
+このブログは CloudFront + S3 でホスティングしています。この構成でホスティングした場合 `/articles/2020/06/blog` や `/articles/2020/06/blog/` へのアクセスは S3 に対応するオブジェクトが存在しないため、404 を返してしまいます。
+
+CloudFront のカスタムエラーレスポンスで、エラー時に `/` を返すようにすればクライアントサイドでのルーティングによって、正しくページが表示されます。しかし、このやり方では、ルーティングを行うためパフォーマンスへの影響や、一瞬 `/` のページが表示されてしまうなどの問題があります。
+
+そこでこのブログでは Lambda@Edge を用いてこの問題を解決しました。Lambda@Edge とは CloudFront のリクエストやレスポンスに hook して Lambda を実行できるサービスです。
+
+`viewer-request` に hook してリクエストを書き換える Lambda を用意しました。
+
+```js
+/** @type {import("@types/aws-lambda").CloudFrontRequestHandler} */
+exports.handler = (event, _, callback) => {
+  const { request } = event.Records[0].cf;
+
+  if (request.uri !== '/' && request.uri.endsWith('/')) {
+    callback(null, { ...request, uri: `${request.uri}index.html` });
+    return;
+  }
+
+  const paths = request.uri.split('/');
+  if (!paths[paths.length - 1].includes('.')) {
+    callback(null, { ...request, uri: `${request.uri}/index.html` });
+    return;
+  }
+  callback(null, request);
+};
+
+```
+
+この Lambda により `/articles/2020/06/blog` や `/articles/2020/06/blog/` にアクセスしたときに `/articles/2020/06/blog/index.html` というオブジェクトを S3 へ取得しに行くようになります。
+
 ## 終わりに
 NuxtJS にも静的サイトジェネレータの機能が実装されました。これと Git-based の Headless CMS として機能を提供する `@nuxtjs/content` を組み合わせることでブログを作ってみたという話でした。
 
