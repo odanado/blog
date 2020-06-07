@@ -78,3 +78,4 @@ exports.handler = (event, _, callback) => {
 ## 終わりに
 NuxtJS にも静的サイトジェネレータの機能が実装されました。これと Git-based の Headless CMS として機能を提供する `@nuxtjs/content` を組み合わせることでブログを作ってみたという話でした。
 
+取りあえずは https://scrapbox.io/odan-worklog/ に書いてた内容はこっちに書いていきたいと考えています。
