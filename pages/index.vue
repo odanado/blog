@@ -6,38 +6,23 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { format } from 'date-fns';
-import ArticleCard, { Article } from '../components/article-card.vue';
+import ArticleCard from '../components/article-card.vue';
+import { Article } from '../repositories/article.repository';
 
 export default Vue.extend({
   components: {
     ArticleCard
   },
-  async asyncData (app) {
-    const contents = await app.$content('articles', { deep: true }).sortBy('publishAt', 'desc').fetch();
-    console.log('on asyncData', contents);
-    return { contents };
+  async asyncData ({ app }) {
+    const articles = await app.$repositories.article.fetchArticles();
+    return {
+      articles
+    };
   },
   data () {
     return {
-      // TODO: fix type
-      contents: [] as any[]
+      contents: [] as Article[]
     };
-  },
-  computed: {
-    articles (): Article[] {
-      return this.contents.map((content) => {
-        console.log('publishAt', content.publishAt, typeof content.publishAt);
-        console.log('createdAt', content.createdAt, typeof content.createdAt);
-        console.log('updatedAt', content.updatedAt, typeof content.updatedAt);
-        return {
-          title: content.title,
-          publishAt: format(content.publishAt, 'yyyy-MM-dd'),
-          path: content.path,
-          body: content.body
-        };
-      });
-    }
   }
 });
 </script>

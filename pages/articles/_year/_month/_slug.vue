@@ -1,18 +1,18 @@
 <template>
   <article>
-    <nuxt-content :document="content" />
+    <nuxt-content :document="article" />
   </article>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-  async asyncData (app) {
-    const { year, month, slug } = app.params;
-    const path = ['articles', year, month, slug].join('/');
-    const content = await app.$content(path).fetch();
+  async asyncData ({ app, params }) {
+    const { year, month, slug } = params;
 
-    return { content };
+    const article = await app.$repositories.article.fetchArticle(year, month, slug);
+
+    return { article };
   }
 });
 </script>

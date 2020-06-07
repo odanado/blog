@@ -1,7 +1,7 @@
 <template>
   <section class="card">
     <div class="header">
-      <span>{{ article.publishAt }}</span>
+      <span>{{ publishedAt }}</span>
       <h3>
         <nuxt-link :to="article.path">
           {{ article.title }}
@@ -13,20 +13,20 @@
 </template>
 
 <script lang="ts">
+import { format } from 'date-fns';
 import Vue, { PropType } from 'vue';
-
-export type Article = {
-  title: string;
-  publishAt: string;
-  path: string;
-  body: string;
-}
+import { Article } from '../repositories/article.repository';
 
 export default Vue.extend({
   props: {
     article: {
       type: Object as PropType<Article>,
       required: true
+    }
+  },
+  computed: {
+    publishedAt () {
+      return format(this.article.publishedAt, 'yyyy-MM-dd');
     }
   }
 });

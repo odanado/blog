@@ -1,6 +1,6 @@
 ---
 title: テスト投稿1
-publishAt: 2020-06-06
+publishedAt: 2020-06-06
 ---
 
 ## ヘッダー2
