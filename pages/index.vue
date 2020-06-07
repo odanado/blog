@@ -23,6 +23,9 @@ export default Vue.extend({
     return {
       contents: [] as Article[]
     };
+  },
+  head: {
+    title: '記事一覧'
   }
 });
 </script>

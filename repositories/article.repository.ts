@@ -4,13 +4,26 @@ export type Article = {
   title: string;
   publishedAt: Date;
   path: string;
-  body: string;
+  body: unknown;
+  bodyText: string;
 }
 
 export class ArticleRepository {
   private readonly $content: (...args: Array<String | Object>) => NuxtContentInstance
   constructor ($content: (...args: Array<String | Object>) => NuxtContentInstance) {
     this.$content = $content;
+  }
+
+  private _getBodyText (node: any): string {
+    if (node.type === 'text') {
+      return node.value;
+    }
+    if (node.children) {
+      return node.children.map((child: any) => {
+        return this._getBodyText(child);
+      }).join('');
+    }
+    return '';
   }
 
   private _convertPage (page: any): Article {
@@ -21,7 +34,8 @@ export class ArticleRepository {
       title: page.title,
       publishedAt: typeof page.publishedAt === 'string' ? new Date(page.publishedAt) : page.publishedAt,
       path: page.path,
-      body: page.body
+      body: page.body,
+      bodyText: this._getBodyText(page.body)
     };
   }
 
