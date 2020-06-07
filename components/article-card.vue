@@ -1,8 +1,8 @@
 <template>
   <section class="card">
     <div class="header">
-      <span>{{ publishedAt }}</span>
-      <h3>
+      <span class="date">{{ publishedAt }}</span>
+      <h3 class="title">
         <nuxt-link :to="article.path">
           {{ article.title }}
         </nuxt-link>
@@ -36,6 +36,14 @@ export default Vue.extend({
 .header {
   display: flex;
   align-items: baseline;
+
+  .date {
+    flex: 0 1 120px;
+  }
+
+  .title {
+    flex: 0 2 100%;
+  }
 
   > * {
     padding: 0 4px;
