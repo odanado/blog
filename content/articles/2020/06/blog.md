@@ -54,11 +54,17 @@ CloudFront のカスタムエラーレスポンスで、エラー時に `/` を�
 `viewer-request` に hook してリクエストを書き換える Lambda を用意しました。
 
 ```js
+
 /** @type {import("@types/aws-lambda").CloudFrontRequestHandler} */
 exports.handler = (event, _, callback) => {
   const { request } = event.Records[0].cf;
 
-  if (request.uri !== '/' && request.uri.endsWith('/')) {
+  if (request.uri === '/') {
+    callback(null, request);
+    return;
+  }
+
+  if (request.uri.endsWith('/')) {
     callback(null, { ...request, uri: `${request.uri}index.html` });
     return;
   }
@@ -70,7 +76,6 @@ exports.handler = (event, _, callback) => {
   }
   callback(null, request);
 };
-
 ```
 
 この Lambda により `/articles/2020/06/blog` や `/articles/2020/06/blog/` にアクセスしたときに `/articles/2020/06/blog/index.html` というオブジェクトを S3 へ取得しに行くようになります。
