@@ -1,4 +1,6 @@
 
+const origin = process.env.ORIGIN | 'http://localhost:3000';
+
 /** @type {import('@nuxt/types').Configuration} */
 export default {
   mode: 'universal',
@@ -47,7 +49,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxt/content'
+    '@nuxt/content',
+    ['@nuxtjs/amp', { origin }]
   ],
   /*
   ** Build configuration
