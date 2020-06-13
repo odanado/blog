@@ -37,6 +37,7 @@ jobs:
         yarn export
       env:
         CI: true
+        ORIGIN: blog.odan.dev
 
     - name: Deploy blog
       if: github.ref == 'refs/heads/master'
