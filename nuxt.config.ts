@@ -1,6 +1,12 @@
+import { getConfig } from './config';
+const config = getConfig();
 
 /** @type {import('@nuxt/types').Configuration} */
 export default {
+  server: {
+    port: config.port,
+    host: config.host
+  },
   mode: 'universal',
   /*
   ** Headers of the page
@@ -33,6 +39,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/config',
     '~/plugins/repository'
   ],
   /*

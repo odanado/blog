@@ -37,8 +37,10 @@ jobs:
         yarn export
       env:
         CI: true
+        ORIGIN: https://blog.odan.dev
 
     - name: Deploy blog
+      if: github.ref == 'refs/heads/master'
       run: ./scripts/deploy.sh
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
