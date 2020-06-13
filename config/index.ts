@@ -5,9 +5,9 @@ export type Config = {
 }
 
 export function getConfig (): Config {
-  const port = Number.parseInt(process.env.port || '3000');
-  const host = process.env.host || 'localhost';
-  const origin = process.env.origin || `http://${host}:${port}`;
+  const port = Number.parseInt(process.env.PORT || '3000');
+  const host = process.env.HOST || 'localhost';
+  const origin = process.env.ORIGIN || `http://${host}:${port}`;
   return {
     port,
     host,

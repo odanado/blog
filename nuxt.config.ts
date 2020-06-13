@@ -60,5 +60,8 @@ export default {
   ** Build configuration
   */
   build: {
+  },
+  env: {
+    ORIGIN: config.origin
   }
 };
