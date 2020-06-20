@@ -2,20 +2,20 @@ import { Plugin } from '@nuxt/types';
 import { Config, getConfig } from '../config';
 
 const plugin: Plugin = (_, inject) => {
-  const config = getConfig();
-  inject('config', config);
+  const blogConfig = getConfig();
+  inject('config', blogConfig);
 };
 
 export default plugin;
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $config: Config
+    $blogConfig: Config
   }
 }
 
 declare module '@nuxt/types' {
   interface NuxtAppOptions {
-    $config: Config
+    $blogConfig: Config
   }
 }
