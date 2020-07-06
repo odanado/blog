@@ -24,6 +24,15 @@ publishedAt: 2020-07-06
     - https://wiki.trezor.io/Trezor_Connect_API
   - trezor は bridge を native アプリとして入れるタイプ
     - https://wallet.trezor.io/#/bridge
+    - 実装？
+      - https://github.com/trezor/trezord-go
+  - https://github.com/trezor/connect/blob/1b194882aec96d0744b96e340e549f60a7041b41/src/js/iframe/builder.js#L45
+    - `settings.iframeSrc` の iframe を作って、そこに PostMessage している
+      - 設定はここ
+        - https://github.com/trezor/connect/blob/bb7b23076ec98f54eae0d57c58e62160a798a68a/src/js/data/ConnectSettings.js#L121
 - 結局どちらも hack 的なことは難しそう
   - そもそも bridge を偽装するのはどうなんだ？
+    - bridge 先を UI から変更できるとすると、詐欺が増えそう
+  - 仮想 USB 的なのを作ってハードウェアウォレットに偽装する方法
+    - USB のデバイスがちゃんとしたハードウェアウォレットか検証しているだろうし難しい
   - fork して任意の keyring を追加する方法が良さそうか
