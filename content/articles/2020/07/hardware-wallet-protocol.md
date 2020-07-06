@@ -3,6 +3,10 @@ title: ハードウェアウォレットのプロトコルを話したい
 publishedAt: 2020-07-06
 ---
 
+- 動機
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">趣味でハードウェアウォレット買って遊びたいけど買うだけの余裕がないので、適当にハードウェアウォレットのプロトコルを喋るやつを作って MetaMask と連携させてみたい</p>&mdash; odan (@odan3240) <a href="https://twitter.com/odan3240/status/1279997293395980289?ref_src=twsrc%5Etfw">July 6, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 - MetaMask が対応しているハードウェアウォレットは Ledger と Trezor
 	- https://github.com/MetaMask/eth-ledger-bridge-keyring
 	- https://github.com/MetaMask/eth-trezor-keyring
