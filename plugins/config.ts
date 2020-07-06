@@ -3,7 +3,7 @@ import { Config, getConfig } from '../config';
 
 const plugin: Plugin = (_, inject) => {
   const blogConfig = getConfig();
-  inject('config', blogConfig);
+  inject('blogConfig', blogConfig);
 };
 
 export default plugin;
