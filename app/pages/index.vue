@@ -10,6 +10,7 @@ import ArticleCard from '../components/article-card.vue';
 import { Article } from '../repositories/article.repository';
 
 export default Vue.extend({
+  amp: true,
   components: {
     ArticleCard
   },

@@ -11,6 +11,7 @@ import { MetaInfo } from 'vue-meta';
 import { Article } from '../../../../repositories/article.repository';
 
 export default Vue.extend({
+  amp: true,
   async asyncData ({ app, params }) {
     const { year, month, slug } = params;
 

@@ -56,11 +56,11 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxt/content'
+    ['@nuxt/content', {
+      dir: join(process.cwd(), 'content')
+    }],
+    ['@nuxtjs/amp', { origin: config.origin }]
   ],
-  content: {
-    dir: join(process.cwd(), 'content')
-  },
   /*
   ** Build configuration
   */
