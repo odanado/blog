@@ -58,7 +58,9 @@ export default {
   modules: [
     ['@nuxt/content', {
       dir: join(process.cwd(), 'content')
-    }]
+    }],
+    '~/modules/sitemap',
+    ['@nuxtjs/sitemap', { hostname: config.origin }]
   ],
   /*
   ** Build configuration
