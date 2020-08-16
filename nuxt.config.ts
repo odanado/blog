@@ -1,8 +1,10 @@
-import { getConfig } from './config';
+import { join } from 'path';
+import { getConfig } from './app/config';
 const config = getConfig();
 
 /** @type {import('@nuxt/types').Configuration} */
 export default {
+  srcDir: 'app',
   server: {
     port: config.port,
     host: config.host
@@ -56,6 +58,9 @@ export default {
   modules: [
     '@nuxt/content'
   ],
+  content: {
+    dir: join(process.cwd(), 'content')
+  },
   /*
   ** Build configuration
   */
