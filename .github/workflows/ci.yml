@@ -32,9 +32,9 @@ jobs:
       env:
         CI: true
 
-    - name: Run export
+    - name: Run generate
       run: |
-        yarn export
+        yarn generate
       env:
         CI: true
         ORIGIN: https://blog.odan.dev
