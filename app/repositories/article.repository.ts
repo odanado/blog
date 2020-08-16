@@ -33,14 +33,14 @@ export class ArticleRepository {
     return {
       title: page.title,
       publishedAt: typeof page.publishedAt === 'string' ? new Date(page.publishedAt) : page.publishedAt,
-      path: page.path,
+      path: page.dir,
       body: page.body,
       bodyText: this._getBodyText(page.body)
     };
   }
 
   public async fetchArticle (year: string, month: string, slug: string): Promise<Article> {
-    const path = ['articles', year, month, slug].join('/');
+    const path = ['articles', year, month, slug, 'index'].join('/');
 
     const page = await this.$content(path).fetch();
     return this._convertPage(page);
