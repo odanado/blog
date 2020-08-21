@@ -60,7 +60,8 @@ export default {
       dir: join(process.cwd(), 'content')
     }],
     '~/modules/sitemap',
-    ['@nuxtjs/sitemap', { hostname: config.origin }]
+    ['@nuxtjs/sitemap', { hostname: config.origin }],
+    '@nuxtjs/robots'
   ],
   /*
   ** Build configuration
