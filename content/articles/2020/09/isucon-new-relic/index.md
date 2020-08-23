@@ -11,4 +11,4 @@ publishedAt: 2020-09-01
 [フォーラム](https://discuss.newrelic.com/)が存在することを知り、それっぽい単語で検索すると、この質問が見つかりました。
 https://discuss.newrelic.com/t/relic-solution-how-to-add-remove-update-a-user/110476
 
-どうやら `User Management app` に以降したようです。
+どうやら `User Management app` にユーザー管理は移行したようです。
