@@ -79,6 +79,9 @@ Discord の感想戦を眺めてなるほどって思ったものを書いてお
 - Generated Columns
   - https://dev.mysql.com/doc/refman/5.7/en/create-table-generated-columns.html
   - 知らなかった
+- etckeeper
+  - https://qiita.com/bezeklik/items/a66f1cfdba7fb4e368f6
+  - 便利そう
 
 ## 感想
 去年より問題はかなりシンプルになったにも関わらず、やることがたくさんあって楽しかったです。
