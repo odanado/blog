@@ -26,7 +26,11 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@nuxt/content"
+      "@nuxt/content",
+      "@types/jest",
+      "@types/express",
+      "@types/pixelmatch",
+      "@types/pngjs"
     ]
   },
   "exclude": [
