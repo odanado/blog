@@ -3,7 +3,7 @@
     <div class="header">
       <span class="date">{{ publishedAt }}</span>
       <h3 class="title">
-        <nuxt-link :to="article.path">
+        <nuxt-link :to="article.path" data-testid="article-card-link">
           {{ article.title }}
         </nuxt-link>
       </h3>
