@@ -42,3 +42,5 @@ jobs:
         yarn test:e2e
       env:
         CI: true
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
