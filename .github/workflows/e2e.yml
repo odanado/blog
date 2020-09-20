@@ -38,7 +38,7 @@ jobs:
 
     - name: Run e2e test
       run: |
-        tree dist
+        ls dist/articles/**/*
         yarn test:e2e
       env:
         CI: true
