@@ -1,0 +1,43 @@
+name: e2e
+
+on:
+  push:
+    branches:
+      - "**"
+
+
+jobs:
+  e2e:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - uses: microsoft/playwright-github-action@v1
+    - name: yarn install
+      run: |
+        yarn install --frozen-lockfile
+      env:
+        CI: true
+
+    - name: Run generate
+      run: |
+        yarn generate
+      env:
+        CI: true
+
+
+    - name: Run generate
+      run: |
+        yarn test:e2e
+      env:
+        CI: true
