@@ -23,6 +23,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - uses: microsoft/playwright-github-action@v1
+    - name: Install Japanese font
+      run: |
+        sudo apt install -y fonts-ipafont-gothic fonts-ipafont-mincho
+
     - name: yarn install
       run: |
         yarn install --frozen-lockfile
@@ -34,10 +38,6 @@ jobs:
         yarn generate
       env:
         CI: true
-
-    - name: Install Japanese font
-      run: |
-        apt install -y fonts-ipafont-gothic fonts-ipafont-mincho
 
     - name: Run e2e test
       run: |
