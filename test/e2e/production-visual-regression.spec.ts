@@ -23,7 +23,7 @@ const THRESHOLD = 0.01;
 
 jest.setTimeout(10000);
 
-describe('poyo', () => {
+describe('production-visual-regression', () => {
   let server: Server;
   let browser: playwright.Browser;
 
@@ -61,8 +61,8 @@ describe('poyo', () => {
       const [devPage, prodPage] = await Promise.all([browser.newPage(), browser.newPage()]);
 
       await Promise.all([
-        devPage.goto(testcase.dev.url, { waitUntil: 'domcontentloaded' }),
-        prodPage.goto(testcase.prod.url, { waitUntil: 'domcontentloaded' })
+        devPage.goto(testcase.dev.url, { waitUntil: 'networkidle' }),
+        prodPage.goto(testcase.prod.url, { waitUntil: 'networkidle' })
       ]);
 
       await Promise.all([
