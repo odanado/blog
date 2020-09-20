@@ -35,12 +35,12 @@ jobs:
       env:
         CI: true
 
+    - name: Install Japanese font
+      run: |
+        apt install -y fonts-ipafont-gothic fonts-ipafont-mincho
 
     - name: Run e2e test
       run: |
-        ls dist/articles/**/*
         yarn test:e2e
       env:
         CI: true
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3

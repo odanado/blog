@@ -19,9 +19,9 @@ const TARGET_PATHS = [
   '/articles/2020/08/aws-codebuild-run-build'
 ];
 
-const THRESHOLD = 0.01;
+const THRESHOLD = 0.001;
 
-jest.setTimeout(10000);
+jest.setTimeout(15000);
 
 describe('production-visual-regression', () => {
   let server: Server;
@@ -40,7 +40,7 @@ describe('production-visual-regression', () => {
 
     await mkdir(IMAGE_DIR, { recursive: true });
 
-    browser = await playwright.chromium.launch();
+    browser = await playwright.chromium.launch({});
   });
   afterAll(async () => {
     server.close();
