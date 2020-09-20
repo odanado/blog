@@ -1,12 +1,10 @@
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { mkdir } from 'fs/promises';
-import { URL } from 'url';
 import type { Server } from 'http';
 
 import express from 'express';
 import playwright from 'playwright';
-import { fetchSitemap } from '../utils/fetch-sitemap';
 import { ImageMatcher } from '../utils/image-matcher';
 
 const DIST_DIR = join(__dirname, '..', '..', 'dist');
@@ -15,44 +13,53 @@ const PROD_URL = 'https://blog.odan.dev';
 const DEV_PORT = 3000;
 const DEV_URL = `http://localhost:${DEV_PORT}`;
 
-let server: Server;
+const TARGET_PATHS = [
+  '/',
+  '/articles/2020/09/isucon10-qualify',
+  '/articles/2020/08/aws-codebuild-run-build'
+];
+
+const THRESHOLD = 0.01;
+
+jest.setTimeout(10000);
 
 describe('poyo', () => {
-  beforeAll((done) => {
+  let server: Server;
+  let browser: playwright.Browser;
+
+  beforeAll(async () => {
     const app = express();
 
     app.use(express.static(DIST_DIR));
 
-    server = app.listen(DEV_PORT, () => {
-      done();
+    await new Promise((resolve) => {
+      server = app.listen(DEV_PORT, () => {
+        resolve();
+      });
     });
-    jest.setTimeout(30000);
-  });
-  afterAll(() => {
-    server.close();
-  });
-  it('poyo', async () => {
-    const urls = await (await fetchSitemap(`${PROD_URL}/sitemap.xml`)).urlset.url.map(x => x.loc);
-    const pathnames = urls.map(url => new URL(url).pathname);
-    console.log(pathnames);
-    console.log(pathnames[0].split('/').join('-'));
-    const browser = await playwright.chromium.launch();
-    const page = await browser.newPage();
 
     await mkdir(IMAGE_DIR, { recursive: true });
 
-    const testcases = pathnames.map(pathname => ({
-      dev: {
-        url: `${DEV_URL}${pathname}`, env: 'dev', imagePath: join(IMAGE_DIR, `dev${pathname.split('/').join('-')}.png`)
-      },
-      prod: {
-        url: `${PROD_URL}${pathname}`, env: 'prod', imagePath: join(IMAGE_DIR, `prod${pathname.split('/').join('-')}.png`)
-      }
-    }));
+    browser = await playwright.chromium.launch();
+  });
+  afterAll(async () => {
+    server.close();
+    await browser.close();
+  });
+  describe.each(TARGET_PATHS)('path: %s', (path) => {
+    it('ok', async () => {
+      const matcher = new ImageMatcher();
+      const testcase = {
+        dev: {
+          url: `${DEV_URL}${path}`, env: 'dev', imagePath: join(IMAGE_DIR, `dev${path.split('/').join('-')}.png`)
+        },
+        prod: {
+          url: `${PROD_URL}${path}`, env: 'prod', imagePath: join(IMAGE_DIR, `prod${path.split('/').join('-')}.png`)
+        }
+      };
 
-    console.log(IMAGE_DIR);
-    const matcher = new ImageMatcher();
-    for (const testcase of testcases) {
+      const page = await browser.newPage();
+
       await page.goto(testcase.dev.url, { waitUntil: 'domcontentloaded' });
       await page.screenshot({
         path: testcase.dev.imagePath,
@@ -64,10 +71,9 @@ describe('poyo', () => {
         fullPage: true
       });
 
-      console.log([testcase.dev.imagePath, testcase.prod.imagePath]);
-      console.log(testcase.dev.url, await matcher.match([testcase.dev.imagePath, testcase.prod.imagePath]));
-    }
+      const errorRate = await matcher.match([testcase.dev.imagePath, testcase.prod.imagePath]);
 
-    await browser.close();
+      expect(errorRate).toBeLessThanOrEqual(THRESHOLD);
+    });
   });
 });

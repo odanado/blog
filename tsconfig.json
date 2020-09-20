@@ -30,8 +30,7 @@
       "@types/jest",
       "@types/express",
       "@types/pixelmatch",
-      "@types/pngjs",
-      "@types/node-fetch"
+      "@types/pngjs"
     ]
   },
   "exclude": [
