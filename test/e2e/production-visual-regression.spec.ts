@@ -58,18 +58,23 @@ describe('poyo', () => {
         }
       };
 
-      const page = await browser.newPage();
+      const [devPage, prodPage] = await Promise.all([browser.newPage(), browser.newPage()]);
 
-      await page.goto(testcase.dev.url, { waitUntil: 'domcontentloaded' });
-      await page.screenshot({
-        path: testcase.dev.imagePath,
-        fullPage: true
-      });
-      await page.goto(testcase.prod.url, { waitUntil: 'domcontentloaded' });
-      await page.screenshot({
-        path: testcase.prod.imagePath,
-        fullPage: true
-      });
+      await Promise.all([
+        devPage.goto(testcase.dev.url, { waitUntil: 'domcontentloaded' }),
+        prodPage.goto(testcase.prod.url, { waitUntil: 'domcontentloaded' })
+      ]);
+
+      await Promise.all([
+        devPage.screenshot({
+          path: testcase.dev.imagePath,
+          fullPage: true
+        }),
+        prodPage.screenshot({
+          path: testcase.prod.imagePath,
+          fullPage: true
+        })
+      ]);
 
       const errorRate = await matcher.match([testcase.dev.imagePath, testcase.prod.imagePath]);
 
