@@ -63,8 +63,8 @@ describe('production-visual-regression', () => {
       const [devPage, prodPage] = await Promise.all([browser.newPage(), browser.newPage()]);
 
       await Promise.all([
-        devPage.goto(testcase.dev.url, { waitUntil: 'networkidle' }),
-        prodPage.goto(testcase.prod.url, { waitUntil: 'networkidle' })
+        devPage.waitForSelector('.twitter-tweet-rendered'),
+        prodPage.waitForSelector('.twitter-tweet-rendered')
       ]);
 
       await Promise.all([
