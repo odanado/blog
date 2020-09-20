@@ -15,6 +15,8 @@ const DEV_URL = `http://localhost:${DEV_PORT}`;
 
 const TARGET_PATHS = [
   '/',
+  '/articles/2020/06/blog',
+  '/articles/2020/07/hardware-wallet-protocol',
   '/articles/2020/09/isucon10-qualify',
   '/articles/2020/08/aws-codebuild-run-build'
 ];

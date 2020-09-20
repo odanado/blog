@@ -41,6 +41,6 @@ jobs:
 
     - name: Run e2e test
       run: |
-        yarn test:e2e
+        ./scripts/if-not-modify-articles.sh yarn test:e2e
       env:
         CI: true
