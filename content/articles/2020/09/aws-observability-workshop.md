@@ -22,6 +22,8 @@ https://github.com/aws-samples/one-observability-demo
 - CloudWatch Logs インサイトでロググループを横断して検索できるのは、request id を使ってをログを横串で見るためなのか
 - Amazon CloudWatch Synthetics で Puppeteer を使えたの知らなかった
   - 監視対象をかなり柔軟に指定できて良さそう
+- デモサイトをケーススタディとして、Observability とは何か？学ぶワークショップを期待したけど、実際は違った
+  - Observability に関係する AWS の各サービスの使い方を学ぶ内容だった
 
 
 ## demo の AWS CDK をデプロイするとエラーでハマったメモ
