@@ -1,5 +1,5 @@
 ---
-title: AWS のObservability ワークショップをちょっと触ってみた
+title: AWS の Observability ワークショップをちょっと触ってみた
 publishedAt: 2020-09-23
 ---
 
