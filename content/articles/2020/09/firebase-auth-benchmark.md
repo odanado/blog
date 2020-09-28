@@ -55,7 +55,7 @@ Firebase Authentication はユーザー認証に関するサービスです。�
 |admin.auth().verifyIdToken (checkRevoked が false)|0.3 ms ± 0.5 ms (10 runs)|
 
 ## 感想
-`firebase-admin` の `createUser` と `getUser` と `verifyIdToken ((checkRevoked が true)` は、リージョンが異なると実行時間に倍以上の違いがあることがわかりました。Firebase Authentication のバックエンドはアメリカにあり、東京からリクエストを行うと、アメリカまでの通信 + 認証に関する処理に時間がかかっているようです。
+`firebase-admin` の `createUser` と `getUser` と `verifyIdToken (checkRevoked が true)` は、リージョンが異なると実行時間に倍以上の違いがあることがわかりました。Firebase Authentication のバックエンドはアメリカにあり、東京からリクエストを行うと、アメリカまでの通信 + 認証に関する処理に時間がかかっているようです。
 `getUser` は us-east-1 だと遅くはないが速くもない程度ですが、ap-northeast-1 では遅いと感じ始めるぐらいのレスポンスタイムでしょうか。
 
 書き方が悪かったのか `onAuthStateChanged` はどちらのリージョンでも実行時間を計測することが出来ませんでした。ブラウザでこの関数を待つと 500ms 程度かかる記憶がありましたが、サインイン方式や ブラウザ/NodeJS の環境の違いによるもの何でしょうか。
