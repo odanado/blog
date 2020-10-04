@@ -1,4 +1,4 @@
-import { NuxtContentInstance } from '@nuxt/content';
+import { contentFunc, IContentDocument } from '@nuxt/content/types/content';
 
 export type Article = {
   title: string;
@@ -9,8 +9,8 @@ export type Article = {
 }
 
 export class ArticleRepository {
-  private readonly $content: (...args: Array<String | Object>) => NuxtContentInstance
-  constructor ($content: (...args: Array<String | Object>) => NuxtContentInstance) {
+  private readonly $content: contentFunc
+  constructor ($content: contentFunc) {
     this.$content = $content;
   }
 
@@ -26,7 +26,7 @@ export class ArticleRepository {
     return '';
   }
 
-  private _convertPage (page: any): Article {
+  private _convertPage (page: IContentDocument): Article {
     // TODO: fix `page` type
 
     // TODO: add validation
@@ -43,13 +43,17 @@ export class ArticleRepository {
     const path = ['articles', year, month, slug].join('/');
 
     const page = await this.$content(path).fetch();
+
+    if (Array.isArray(page)) {
+      return Promise.reject(new Error('ArticleRepository: fetched multiple pages'));
+    }
     return this._convertPage(page);
   }
 
   public async fetchArticles (): Promise<Article[]> {
-    // TODO: fix `pages` type
-    const pages: any[] = await this.$content('articles', { deep: true }).sortBy('publishedAt', 'desc').fetch();
+    const pageOrPages = await this.$content('articles', { deep: true }).sortBy('publishedAt', 'desc').fetch();
 
+    const pages = Array.isArray(pageOrPages) ? pageOrPages : [pageOrPages];
     return pages.map(page => this._convertPage(page));
   }
 }
