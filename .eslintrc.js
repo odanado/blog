@@ -12,6 +12,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     semi: ['error', 'always'],
-    'no-console': process.env.CI ? "error" : "warn"
+    'no-console': process.env.CI ? 'error' : 'warn'
   }
-}
+};
