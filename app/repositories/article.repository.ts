@@ -1,4 +1,4 @@
-import { NuxtContentInstance } from '@nuxt/content';
+import { contentFunc } from '@nuxt/content/types/content';
 
 export type Article = {
   title: string;
@@ -9,8 +9,8 @@ export type Article = {
 }
 
 export class ArticleRepository {
-  private readonly $content: (...args: Array<String | Object>) => NuxtContentInstance
-  constructor ($content: (...args: Array<String | Object>) => NuxtContentInstance) {
+  private readonly $content: contentFunc
+  constructor ($content: contentFunc) {
     this.$content = $content;
   }
 
