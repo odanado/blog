@@ -29,7 +29,7 @@
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/eslint-module": "^3.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@types/aws-lambda": "^8.10.63",
     "@types/date-fns": "^2.6.0",
