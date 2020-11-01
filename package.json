@@ -13,7 +13,8 @@
     "lint:es": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint '**/*.{vue,scss,css}' --ignore-path .gitignore",
     "export": "nuxt-ts build --target static; nuxt-ts export",
-    "test:e2e": "yarn jest --detectOpenHandles --forceExit"
+    "test:e2e": "yarn jest --detectOpenHandles --forceExit",
+    "nuxt-ts-storybook": "ts-node node_modules/.bin/nuxt-storybook"
   },
   "dependencies": {
     "@exampledev/new.css": "^1.1.3",
