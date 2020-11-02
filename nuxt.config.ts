@@ -9,7 +9,7 @@ export default {
     port: config.port,
     host: config.host
   },
-  mode: 'universal',
+  target: 'static',
   /*
   ** Headers of the page
   */
