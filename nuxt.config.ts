@@ -35,7 +35,8 @@ export default {
   ** Global CSS
   */
   css: [
-    '@exampledev/new.css/new.css'
+    '@exampledev/new.css/new.css',
+    '~/assets/variables.css'
   ],
   /*
   ** Plugins to load before mounting the App
