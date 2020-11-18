@@ -43,6 +43,6 @@ jobs:
 
     - name: Build storybook
       run: |
-        yarn nuxt-ts-storybook build
+        yarn nuxt storybook build
       env:
         CI: true
