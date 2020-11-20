@@ -3,6 +3,8 @@ title: TypeScript を採用している Nuxt.js プロジェクトで @nuxtjs/st
 publishedAt: 2020-11-02
 ---
 
+追記: 2020-11-20
+[v3.2.0](https://github.com/nuxt-community/storybook/releases/tag/v3.2.0) のリリースでこの問題は解決されました。
 
 ## @nuxtjs/storybook とは
 
