@@ -1,6 +1,6 @@
 ---
 title: Vue.js の provide/inject を使って UI State を props から逃がす
-publishedAt: 2020-12-02
+publishedAt: 2020-12-13
 ---
 
 `isLoading` などの UI State を props によるバケツリレーではなく provide/inject 機能を使ってグローバル変数に逃がす例を紹介します。
@@ -35,4 +35,6 @@ https://v3.vuejs.org/guide/component-provide-inject.html
 実際に試しに書いてみたコードは次のリポジトリです。
 https://github.com/odan-sandbox/vue-provider-sandbox
 
-`Page コンポーネント` で API を叩いて、`GreatGrandchild コンポーネント` は `ボタンコンポーネント` に loading の状態を渡しています。
+[Page コンポーネント](https://github.com/odan-sandbox/vue-provider-sandbox/blob/master/src/pages/index.vue) で API を叩いて、[GreatGrandchild コンポーネント](https://github.com/odan-sandbox/vue-provider-sandbox/blob/master/src/components/GreatGrandchild.vue) は `ボタンコンポーネント` に loading の状態を渡しています。
+
+このように UI state を間のコンポーネントをすっ飛ばして扱えます。
