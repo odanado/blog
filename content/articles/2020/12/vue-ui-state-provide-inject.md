@@ -38,3 +38,8 @@ https://github.com/odan-sandbox/vue-provider-sandbox
 [Page コンポーネント](https://github.com/odan-sandbox/vue-provider-sandbox/blob/master/src/pages/index.vue) で API を叩いて、[GreatGrandchild コンポーネント](https://github.com/odan-sandbox/vue-provider-sandbox/blob/master/src/components/GreatGrandchild.vue) は `ボタンコンポーネント` に loading の状態を渡しています。
 
 このように UI state を間のコンポーネントをすっ飛ばして扱えます。
+
+## 感想
+ UI state として loading の状態が1つだけの場合のサンプルを書いてみました。これだけだと利点がわかりにくい気がしますね。もっと UI State の数が増えて複雑な場合だとどうなるか考えたいです。
+ 
+ また、Context の状態を参照できるコンポーネントのレイヤーはどこからなのかというのも新しく考える必要がありそうです。
