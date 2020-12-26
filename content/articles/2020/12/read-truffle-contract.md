@@ -1,5 +1,5 @@
 ---
-title: @truffle/contract の仕組みを追う
+title: truffle/contract の仕組みを追う
 publishedAt: 2020-12-26
 ---
 
