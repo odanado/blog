@@ -75,6 +75,10 @@ declare var hre: import("hardhat/types").HardhatRuntimeEnvironment;
 - 冪等性を担保する仕組みはない
   - デフォルトだと scripts に deploy.js というコントラクトをデプロイをするスクリプトファイルが生えるが、このファイルを実行するたびに新しいコントラクトがデプロイされてしまう
   - truffle はフレームワーク的だったけど、hardhat は toolchain 的な思想っぽい
+  - デプロイプラグインについて議論中っぽい
+    - https://github.com/nomiclabs/hardhat/issues/381
+    - サードパーティのツール、良さそう
+      - https://github.com/wighawag/hardhat-deploy
 
 ## グローバル変数 hre を使わない
 - task
