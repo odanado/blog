@@ -99,9 +99,9 @@ declare var hre: import("hardhat/types").HardhatRuntimeEnvironment;
 ## 感想
 - グローバル変数に依存しない仕組みの提供や、TypeScript に対応しているのが良い
 - 毎回コンパイルしないので動作が軽いのも良い
-  - デプロイ済み
 - task は必要ない気がする
   - task runner 組みたいなら `npm scripts` やシェルスクリプトで良い
   - 引数をコマンドラインからよしなに受け取りたいなら yargs などを使うほうが良い
 - scripts はいい感じに network を切り替えるために使えるので有用
+  - 本番運用するなら hardhat-deploy は必須な気がする
 - truffle よりは断然開発体験が良いのでこっちを使っていきたい
