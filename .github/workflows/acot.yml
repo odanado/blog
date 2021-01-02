@@ -49,7 +49,7 @@ jobs:
 
     - name: Run acot
       run: |
-        ./scripts/run-acot.sh
+        yarn test:acot
       env:
         CI: true
 

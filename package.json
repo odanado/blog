@@ -14,7 +14,8 @@
     "lint:style": "stylelint '**/*.{vue,scss,css}' --ignore-path .gitignore",
     "export": "nuxt-ts build --target static; nuxt-ts export",
     "test:e2e": "yarn jest --detectOpenHandles --forceExit",
-    "nuxt-ts-storybook": "ts-node --project tsconfig.cjs.json node_modules/.bin/nuxt-storybook"
+    "nuxt-ts-storybook": "ts-node --project tsconfig.cjs.json node_modules/.bin/nuxt-storybook",
+    "test:acot": "acot run --max-warnings 0"
   },
   "dependencies": {
     "@exampledev/new.css": "^1.1.3",
