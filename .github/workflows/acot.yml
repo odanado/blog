@@ -40,8 +40,16 @@ jobs:
       run: |
         yarn install --frozen-lockfile
 
+    - name: Run generate
+      run: |
+        yarn generate
+      env:
+        CI: true
+        ORIGIN: http://localhost:8080
+
     - name: Run acot
       run: |
         ./scripts/run-acot.sh
       env:
         CI: true
+
