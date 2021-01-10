@@ -59,7 +59,7 @@ export default {
     ['@nuxt/content', {
       dir: join(process.cwd(), 'content')
     }],
-    ['@nuxtjs/amp', { origin: config.origin }],
+    ['@nuxtjs/amp', { origin: config.origin, removeInlineStyles: false }],
     '~/modules/sitemap',
     ['@nuxtjs/sitemap', { hostname: config.origin }],
     '@nuxtjs/robots'
