@@ -9,7 +9,7 @@ export default {
     port: config.port,
     host: config.host
   },
-  mode: 'universal',
+  target: 'static',
   /*
   ** Headers of the page
   */
@@ -59,7 +59,10 @@ export default {
     ['@nuxt/content', {
       dir: join(process.cwd(), 'content')
     }],
-    ['@nuxtjs/amp', { origin: config.origin }]
+    ['@nuxtjs/amp', { origin: config.origin }],
+    '~/modules/sitemap',
+    ['@nuxtjs/sitemap', { hostname: config.origin }],
+    '@nuxtjs/robots'
   ],
   /*
   ** Build configuration

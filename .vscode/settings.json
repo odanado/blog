@@ -6,5 +6,8 @@
   "eslint.validate": [
     "typescript",
     "vue"
-  ]
+  ],
+  "[terraform]": {
+    "editor.formatOnSave": true
+  }
 }
