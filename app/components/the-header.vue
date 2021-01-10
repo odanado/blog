@@ -15,6 +15,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .link {
+  color: var(--nc-lk-2);
   text-decoration: none;
 }
 </style>
