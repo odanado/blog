@@ -216,3 +216,28 @@ ZKSyncTxError: zkSync transaction failed: Not enough balance
   - https://rinkeby.zkscan.io/explorer/transactions/fcd819b532b5b857dd1ee5070758c09da54708776ad4af7d27349cd574f7da3b
   - ETH tx hash は `Not yet sent on the chain.`
   - ファイナリティを速める技術じゃないので時間がかかる
+- トランザクション
+  - https://rinkeby.etherscan.io/tx/0xa98e1f08462a9ea485db5d427f7d2d64ee0c89bfe2d9100f493cd0e06f2f791f
+  - deposit と同様に proxy を通してる
+- `completeWithdrawals` の実装
+  - https://github.com/matter-labs/zksync/blob/47bb16fe233d2695c50ccf291dc77dd9f0036dd0/contracts/contracts/ZkSync.sol#L107
+  - 実質の実装の `sendETHNoRevert`
+    - https://github.com/matter-labs/zksync/blob/47bb16fe23/contracts/contracts/Utils.sol#L61
+  - `pendingWithdrawals` に値を追加しているのはこの辺？
+    - https://github.com/matter-labs/zksync/blob/47bb16fe233d2695c50ccf291dc77dd9f0036dd0/contracts/contracts/ZkSync.sol#L771-L774
+    - `processOnchainWithdrawals` 経由
+      - `verifyBlock` で呼び出している
+        - https://github.com/matter-labs/zksync/blob/47bb16fe233d2695c50ccf291dc77dd9f0036dd0/contracts/contracts/ZkSync.sol#L299
+        - `verifyBlockProof` で `_proof` をチェックしているみたい
+          - https://github.com/matter-labs/zksync/blob/47bb16fe23/contracts/contracts/Verifier.sol#L23
+        - `exit` もある
+          - `_proof` でほげほげ
+          - https://github.com/matter-labs/zksync/blob/47bb16fe233d2695c50ccf291dc77dd9f0036dd0/contracts/contracts/ZkSync.sol#L372
+    - 宣言
+      - https://github.com/matter-labs/zksync/blob/47bb16fe233d2695c50ccf291dc77dd9f0036dd0/contracts/contracts/Storage.sol#L41
+
+## 感想
+- L1 => L2 へは Ethereum を信頼すればいいから L2 => L1 にゼロ知識証明を使う感じ？
+- ゼロ知識証明周りの実装は `Verifier.sol` を見れば良さそう
+- Rollup は calldata が〜って言う話を聞いた事あったけど、コード追う感じだと deposit などの情報を普通に変数に保存しているぽくて謎
+  - 変数に保存しておいて、後でまとめて実行しているって理解であっている...？
