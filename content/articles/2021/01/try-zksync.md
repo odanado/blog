@@ -1,6 +1,6 @@
 ---
 title: zkSync を試した
-publishedAt: 2021-01-20
+publishedAt: 2021-01-24
 ---
 
 Rollup が熱いらしい。
