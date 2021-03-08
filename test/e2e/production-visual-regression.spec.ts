@@ -34,7 +34,7 @@ describe('production-visual-regression', () => {
 
     app.use(express.static(DIST_DIR));
 
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       server = app.listen(DEV_PORT, () => {
         resolve();
       });
