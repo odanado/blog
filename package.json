@@ -54,6 +54,6 @@
     "stylelint-config-property-sort-order-smacss": "^7.0.0",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-scss": "^3.19.0",
-    "ts-jest": "^26.5.3"
+    "ts-jest": "^26.5.4"
   }
 }
