@@ -23,7 +23,7 @@
     "@nuxtjs/robots": "^2.5.0",
     "@nuxtjs/sitemap": "^2.4.0",
     "date-fns": "^2.19.0",
-    "nuxt": "^2.15.3"
+    "nuxt": "^2.15.4"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.4",
