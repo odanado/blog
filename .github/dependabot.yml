@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: friday
+    time: "17:00"
+    timezone: Japan
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@nuxtjs/storybook"
+    versions:
+    - 4.0.0
+    - 4.0.1
+  - dependency-name: "@nuxt/typescript-runtime"
+    versions:
+    - 2.0.1
