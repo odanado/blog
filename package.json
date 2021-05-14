@@ -22,7 +22,7 @@
     "@nuxtjs/composition-api": "^0.12.5",
     "@nuxtjs/robots": "^2.5.0",
     "@nuxtjs/sitemap": "^2.4.0",
-    "date-fns": "^2.21.2",
+    "date-fns": "^2.21.3",
     "nuxt": "^2.15.4"
   },
   "devDependencies": {
