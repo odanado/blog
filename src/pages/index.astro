@@ -1,0 +1,36 @@
+---
+import PostLink from "../components/post-link.astro";
+import { format } from "date-fns";
+import BaseLayout from "../layouts/base-layout.astro";
+
+const _posts = await Astro.glob("./articles/**/*.md");
+
+const posts = _posts
+  .map((post) => {
+    return {
+      title: post.frontmatter.title,
+      publishedAt: format(new Date(post.frontmatter.publishedAt), "yyyy-MM-dd"),
+      url: post.url,
+    };
+  })
+  .sort((a, b) => {
+    return new Date(b.publishedAt) - new Date(a.publishedAt);
+  });
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <BaseLayout>
+      <div>
+        {posts.map((post) => <PostLink {...post} />)}
+      </div>
+    </BaseLayout>
+  </body>
+</html>
