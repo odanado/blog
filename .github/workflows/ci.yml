@@ -24,13 +24,13 @@ jobs:
 
       - name: Run lint
         run: |
-          yarn lint
+          npm run lint
         env:
           CI: true
 
       - name: Run build
         run: |
-          yarn build
+          npm run build
         env:
           CI: true
           ORIGIN: https://blog.odan.dev
