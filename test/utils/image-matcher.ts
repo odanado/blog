@@ -1,17 +1,17 @@
-import fs from 'fs';
-import pixelmatch from 'pixelmatch';
-import { PNG } from 'pngjs';
+import fs from "fs";
+import pixelmatch from "pixelmatch";
+import { PNG } from "pngjs";
 
 export class ImageMatcher {
-  public async match (pair: [string, string]): Promise<number> {
+  public async match(pair: [string, string]): Promise<number> {
     const img1 = await this.readFile(pair[0]);
     const img2 = await this.readFile(pair[1]);
 
     if (img1.height !== img2.height) {
-      throw new Error('ImageMatcher: invalid height');
+      throw new Error("ImageMatcher: invalid height");
     }
     if (img1.width !== img2.width) {
-      throw new Error('ImageMatcher: invalid width');
+      throw new Error("ImageMatcher: invalid width");
     }
 
     const { height, width } = img1;
@@ -27,11 +27,11 @@ export class ImageMatcher {
     return error;
   }
 
-  private readFile (file: string): Promise<PNG> {
+  private readFile(file: string): Promise<PNG> {
     return new Promise<PNG>((resolve) => {
       fs.createReadStream(file)
         .pipe(new PNG())
-        .on('parsed', function () {
+        .on("parsed", function () {
           resolve(this);
         });
     });

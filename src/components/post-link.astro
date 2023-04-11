@@ -1,0 +1,40 @@
+---
+export interface Props {
+  title: string;
+  url: string;
+  publishedAt: string;
+}
+
+const { title, url, publishedAt } = Astro.props;
+---
+
+<section class="card">
+  <div class="header">
+    <span class="date">{publishedAt}</span>
+    <h3 class="title">
+      <a href={url}>
+        {title}
+      </a>
+    </h3>
+  </div>
+  <p class="body"></p>
+</section>
+
+<style>
+  .header {
+    display: flex;
+    align-items: baseline;
+
+    > * {
+      padding: 0 4px;
+    }
+  }
+
+  .date {
+    flex: 0 1 120px;
+  }
+
+  .title {
+    flex: 0 2 100%;
+  }
+</style>

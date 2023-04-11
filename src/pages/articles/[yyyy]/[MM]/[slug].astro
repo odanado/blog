@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/base-layout.astro";
+
+type Props = {
+  entry: CollectionEntry<"articles">;
+};
+
+export async function getStaticPaths() {
+  const articlesEntries = await getCollection("articles");
+
+  return articlesEntries.map((entry) => {
+    const [yyyy, MM, slug] = entry.slug.split("/");
+    return {
+      params: { yyyy, MM, slug },
+      props: { entry },
+    };
+  });
+}
+const { entry } = Astro.props;
+const pageTitle = `${entry.data.title} - odan blog`;
+const title = entry.data.title;
+const description = entry.body.trim().slice(0, 90);
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={pageTitle} description={description}>
+  <article>
+    <h1>{title}</h1>
+    <Content />
+  </article>
+</BaseLayout>
