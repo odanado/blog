@@ -1,7 +1,6 @@
 ---
 title: ISUCON10 予選 参加記
 publishedAt: 2020-09-12
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## 結果

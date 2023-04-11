@@ -1,7 +1,6 @@
 ---
 title: hardhat を試した
 publishedAt: 2020-12-27
-layout: ../../../../layouts/base-layout.astro
 ---
 
 Ethereum のスマートコントラクト開発の補助ツールである [hardbat](https://hardhat.org/) を試してみました。個人的には truffle の代替になってくれることを期待して試してみました。

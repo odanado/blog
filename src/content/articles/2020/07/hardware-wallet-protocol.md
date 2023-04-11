@@ -1,7 +1,6 @@
 ---
 title: ハードウェアウォレットのプロトコルを話したい
 publishedAt: 2020-07-06
-layout: ../../../../layouts/base-layout.astro
 ---
 
 - 動機

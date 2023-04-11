@@ -1,7 +1,6 @@
 ---
 title: NuxtJS の full-static export と nuxtjs/content でブログを作った
 publishedAt: 2020-06-07
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## 概要

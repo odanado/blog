@@ -1,7 +1,6 @@
 ---
 title: zkSync を試した
 publishedAt: 2021-01-24
-layout: ../../../../layouts/base-layout.astro
 ---
 
 Rollup が熱いらしい。

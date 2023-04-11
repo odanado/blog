@@ -1,7 +1,6 @@
 ---
 title: TypeScript を採用している Nuxt.js プロジェクトで @nuxtjs/storybook を導入してハマったポイント
 publishedAt: 2020-11-02
-layout: ../../../../layouts/base-layout.astro
 ---
 
 追記: 2020-11-20

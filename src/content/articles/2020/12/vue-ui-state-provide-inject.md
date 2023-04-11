@@ -1,7 +1,6 @@
 ---
 title: Vue.js の provide/inject を使って UI State を props から逃がす
 publishedAt: 2020-12-13
-layout: ../../../../layouts/base-layout.astro
 ---
 
 `isLoading` などの UI State を props によるバケツリレーではなく provide/inject 機能を使ってグローバル変数に逃がす例を紹介します。

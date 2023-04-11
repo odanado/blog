@@ -1,7 +1,6 @@
 ---
 title: Vue Developer Experience / VueDXを試した
 publishedAt: 2020-11-09
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## Vue Developer Experience / VueDX とは

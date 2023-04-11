@@ -1,7 +1,6 @@
 ---
 title: Firebase Authentication のパフォーマンスを計測してみた
 publishedAt: 2020-09-28
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## 概要

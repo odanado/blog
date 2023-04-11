@@ -1,7 +1,6 @@
 ---
 title: truffle/contract の仕組みを追う
 publishedAt: 2020-12-26
-layout: ../../../../layouts/base-layout.astro
 ---
 
 @truffle/contract の仕組みを知る必要があったのでコードを読んだときのメモです

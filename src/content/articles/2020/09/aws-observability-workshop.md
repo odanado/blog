@@ -1,7 +1,6 @@
 ---
 title: AWS の Observability ワークショップをちょっと触ってみた
 publishedAt: 2020-09-23
-layout: ../../../../layouts/base-layout.astro
 ---
 
 [3〜4 時間で AWS の監視系のサービス一気に学べたらコスパ良いと思いませんか | Developers.IO](https://dev.classmethod.jp/articles/introduction-of-one-observability-demo-workshop/)

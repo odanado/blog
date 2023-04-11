@@ -1,7 +1,6 @@
 ---
 title: upptime の status website の更新で草が生えないようにしたい
 publishedAt: 2021-02-16
-layout: ../../../../layouts/base-layout.astro
 ---
 
 [Upptime](https://upptime.js.org/) は GitHub Actions でサイトの死活監視を行う OSS です。死活監視の状況をモニタリングできるサイトを GitHub Pages に自動生成してくれますが、このサイトに対して毎日更新されるたびに GitHub に草が生えてしまうのでなんとかしたいログです。

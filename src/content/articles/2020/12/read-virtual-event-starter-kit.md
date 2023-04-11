@@ -1,7 +1,6 @@
 ---
 title: vercel/virtual-event-starter-kit の実装を読んでみた
 publishedAt: 2020-12-20
-layout: ../../../../layouts/base-layout.astro
 ---
 
 [vercel/virtual-event-starter-kit: Open source demo that Next.js developers can clone, deploy, and fully customize for events.](https://github.com/vercel/virtual-event-starter-kit) は Vercel が公開したオンラインイベントのデモサイトです。このサイトの実装には現在の Web 開発のプラクティスが詰まっていると考えて読んでみました。

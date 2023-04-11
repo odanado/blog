@@ -1,7 +1,6 @@
 ---
 title: GCP の Cloud Logging を試した
 publishedAt: 2021-01-17
-layout: ../../../../layouts/base-layout.astro
 ---
 
 Cloud Logging には良いログのプラクティスが詰まっている気がしていて、実際に使うかに関わらずその思想は学ぶ価値があると考えて試してみました。

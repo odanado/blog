@@ -1,7 +1,6 @@
 ---
 title: aws-codebuild-run-build を試した
 publishedAt: 2020-08-16
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## aws-codebuild-run-build とは

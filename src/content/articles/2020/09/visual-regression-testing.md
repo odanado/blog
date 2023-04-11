@@ -1,7 +1,6 @@
 ---
 title: Dependabot のオートマージのためにビジュアルレグレッションテストを導入した
 publishedAt: 2020-09-22
-layout: ../../../../layouts/base-layout.astro
 ---
 
 ## モチベーション
