@@ -6,17 +6,13 @@
 
 ```bash
 # install dependencies
-$ yarn install
+$ npm i
 
 # serve with hot reload at localhost:3000
-$ yarn dev
+$ npm run dev
 
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
+# generate static site
+$ npm run build
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
