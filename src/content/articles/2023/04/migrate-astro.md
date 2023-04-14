@@ -3,6 +3,8 @@ title: ブログを Nuxt.js から Astro に引っ越した
 publishedAt: 2023-04-13
 ---
 
+ほげ
+
 ## モチベーション
 
 ずっと更新してなかったブログを Nuxt.js から Astro に引っ越しました。
