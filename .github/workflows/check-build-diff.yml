@@ -64,7 +64,7 @@ jobs:
           path: dist-current
 
       - id: diff-name-only
-        run: echo "value=$(diff -qr .github/workflows/ci.yml .github/workflows/check-build-diff.yml)" >> "$GITHUB_OUTPUT"
+        run: echo "value=$(diff -qr dist-main dist-current)" >> "$GITHUB_OUTPUT"
 
   add-pr-comment:
     needs:
@@ -78,6 +78,4 @@ jobs:
         with:
           message: |
             **Check build diff report**
-            $DIFF_NAME_ONLY
-        env:
-          DIFF_NAME_ONLY: ${{ needs.check-build-diff.outputs.diff-name-only }}
+            ${{ needs.check-build-diff.outputs.diff-name-only }}
