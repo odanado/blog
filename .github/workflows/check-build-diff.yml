@@ -50,6 +50,8 @@ jobs:
     needs:
       - build-on-main
       - build-on-current
+    outputs:
+      diff-name-only: ${{ steps.diff-name-only.outputs.value }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -61,4 +63,19 @@ jobs:
           name: ${{ github.sha }}-current
           path: dist-current
 
-      - run: diff -qr dist-main dist-current
+      - id: diff-name-only
+        run: echo "value=$(diff -qr .github/workflows/ci.yml .github/workflows/check-build-diff.yml)" >> "$GITHUB_OUTPUT"
+
+  add-pr-comment:
+    needs:
+      - check-build-diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            **Check build diff report**
+            ${{ needs.check-build-diff.outputs.diff-name-only }}
