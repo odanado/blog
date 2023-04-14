@@ -78,4 +78,6 @@ jobs:
         with:
           message: |
             **Check build diff report**
-            ${{ needs.check-build-diff.outputs.diff-name-only }}
+            $DIFF_NAME_ONLY
+        env:
+          DIFF_NAME_ONLY: ${{ needs.check-build-diff.outputs.diff-name-only }}
