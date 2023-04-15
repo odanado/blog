@@ -96,6 +96,6 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions-ecosystem/action-add-labels@v1
-        if: ${{ needs.check-build-diff.outputs.diff-exit-code != 0 }}
+        if: ${{ needs.check-build-diff.outputs.diff-exit-code == 0 }}
         with:
           labels: no build diff
