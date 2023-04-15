@@ -81,3 +81,15 @@ jobs:
             ```
             ${{ needs.check-build-diff.outputs.diff-name-only }}
             ```
+
+  add-label:
+    needs:
+      - check-build-diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ needs.check-build-diff.outputs.diff-name-only != '' }}
+        with:
+          labels: no build diff
