@@ -2,11 +2,110 @@ name: Check build diff
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
 
 jobs:
-  check-build-diff:
+  if-label:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'dependencies' }}
+    steps:
+      - run: echo Found dependencies label
+
+  build-on-main:
+    needs:
+      - if-label
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: main
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version-file: .node-version
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          ORIGIN: https://blog.odan.dev
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.sha }}-main
+          path: dist
+
+  build-on-current:
+    needs:
+      - if-label
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version-file: .node-version
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          ORIGIN: https://blog.odan.dev
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.sha }}-current
+          path: dist
+
+  check-build-diff:
+    needs:
+      - build-on-main
+      - build-on-current
+    outputs:
+      diff-name-only: ${{ steps.diff-name-only.outputs.value }}
+      diff-exit-code: ${{ steps.diff-exit-code.outputs.value }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.sha }}-main
+          path: dist-main
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.sha }}-current
+          path: dist-current
+
+      - id: diff-name-only
+        run: echo "value=$(diff -qr dist-main dist-current)" >> "$GITHUB_OUTPUT"
+
+      - id: diff-exit-code
+        run: |
+          diff -qr dist-main dist-current
+          echo "value=$?" >> "$GITHUB_OUTPUT"
+
+  add-pr-comment:
+    needs:
+      - check-build-diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            # Check build diff report
+            ```
+            ${{ needs.check-build-diff.outputs.diff-name-only }}
+            ```
+
+  add-label:
+    needs:
+      - check-build-diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ needs.check-build-diff.outputs.diff-exit-code == 0 }}
+        with:
+          labels: no build diff
