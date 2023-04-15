@@ -8,7 +8,7 @@ on:
 jobs:
   if-label:
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'dependencies' }}
+    if: contains(github.event.pull_request.labels.*.name, 'dependencies')
     steps:
       - run: echo Found dependencies label
 
