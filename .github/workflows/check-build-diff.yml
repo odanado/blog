@@ -2,11 +2,19 @@ name: Check build diff
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
 
 jobs:
+  if-label:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'dependencies' }}
+    steps:
+      - run: echo Found dependencies label
+
   build-on-main:
+    needs:
+      - if-label
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -28,6 +36,8 @@ jobs:
           path: dist
 
   build-on-current:
+    needs:
+      - if-label
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
