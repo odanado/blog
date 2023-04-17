@@ -13,6 +13,7 @@
     "lint": "prettier --check . --ignore-path .gitignore"
   },
   "dependencies": {
+    "@astrojs/sitemap": "1.2.2",
     "@exampledev/new.css": "1.1.3",
     "astro": "2.2.3",
     "date-fns": "2.29.3",
