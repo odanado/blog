@@ -20,6 +20,7 @@
     "vue": "3.2.47"
   },
   "devDependencies": {
+    "execa": "7.1.1",
     "prettier": "2.8.7"
   }
 }

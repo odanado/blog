@@ -61,8 +61,8 @@ jobs:
       - build-on-main
       - build-on-current
     outputs:
-      diff-name-only: ${{ steps.diff-name-only.outputs.value }}
-      diff-exit-code: ${{ steps.diff-exit-code.outputs.value }}
+      diff-name-only: ${{ steps.diff-name-only.outputs.result }}
+      diff-exit-code: ${{ steps.diff-exit-code.outputs.result }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -75,12 +75,17 @@ jobs:
           path: dist-current
 
       - id: diff-name-only
-        run: echo "value=$(diff -qr dist-main dist-current)" >> "$GITHUB_OUTPUT"
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { execa } = await import("execa");
+            const { stdout } = await execa("diff", ["-qr", "dist-main", "dist-current"]);
+            return stdout;
 
       - id: diff-exit-code
         run: |
           diff -qr dist-main dist-current
-          echo "value=$?" >> "$GITHUB_OUTPUT"
+          echo "result=$?" >> "$GITHUB_OUTPUT"
 
   add-pr-comment:
     needs:
