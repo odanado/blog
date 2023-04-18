@@ -73,6 +73,12 @@ jobs:
         with:
           name: ${{ github.sha }}-current
           path: dist-current
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version-file: .node-version
+
+      - run: npm ci
 
       - id: diff-name-only
         uses: actions/github-script@v6
