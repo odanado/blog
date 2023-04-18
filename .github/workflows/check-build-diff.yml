@@ -81,6 +81,8 @@ jobs:
           node-version-file: .node-version
 
       - run: npm ci
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - id: diff-name-only
         uses: actions/github-script@v6
