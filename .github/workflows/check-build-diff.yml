@@ -61,8 +61,8 @@ jobs:
       - build-on-main
       - build-on-current
     outputs:
-      diff-name-only: ${{ steps.diff-name-only.outputs.result }}
-      diff-exit-code: ${{ steps.diff-exit-code.outputs.result }}
+      diff-name-only: ${{ steps.diff-name-only.outputs.stdout }}
+      diff-exit-code: ${{ steps.diff-name-only.outputs.exitCode }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -74,28 +74,10 @@ jobs:
           name: ${{ github.sha }}-current
           path: dist-current
 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: npm
-          node-version-file: .node-version
-
-      - run: npm ci
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - id: diff-name-only
-        uses: actions/github-script@v6
+        uses: gh640/command-result-action@v1
         with:
-          script: |
-            const { execa } = await import("execa");
-            const { stdout } = await execa("diff", ["-qr", "dist-main", "dist-current"]);
-            return stdout;
-
-      - id: diff-exit-code
-        run: |
-          diff -qr dist-main dist-current
-          echo "result=$?" >> "$GITHUB_OUTPUT"
+          command: diff -qr dist-main dist-current
 
   add-pr-comment:
     needs:
