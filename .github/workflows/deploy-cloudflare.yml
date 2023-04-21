@@ -1,12 +1,12 @@
-name: CI
+name: Deploy to Cloudflare Pages
 
 on:
   push:
     branches:
-      - "**"
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,18 +19,18 @@ jobs:
       - name: npm ci
         run: |
           npm ci
-        env:
-          CI: true
-
-      - name: Run lint
-        run: |
-          npm run lint
-        env:
-          CI: true
 
       - name: Run build
         run: |
           npm run build
         env:
-          CI: true
           ORIGIN: https://blog.odan.dev
+
+    - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 62ca6c3fd8d892a609ad218d836182ff
+          projectName: blog
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
