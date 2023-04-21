@@ -15,8 +15,6 @@ $ npm run dev
 $ npm run build
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
 ## Resize image
 
 Use https://squoosh.app/
