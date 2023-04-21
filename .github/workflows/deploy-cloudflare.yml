@@ -26,7 +26,7 @@ jobs:
         env:
           ORIGIN: https://blog.odan.dev
 
-    - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
