@@ -6,12 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  has-labels:
+    runs-on: ubuntu-latest
+    if: |
+      (
+        contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+        contains(github.event.pull_request.labels.*.name, 'no build diff')
+      )
+    steps:
+      - run: echo Found labels
   auto-merge:
+    needs:
+      - has-labels
     runs-on: ubuntu-latest
     steps:
-      - run: echo auto merge
-
-      - name: dump context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - run: gh pr merge ${{ github.event.pull_request.number }} --merge
