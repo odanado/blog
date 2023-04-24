@@ -12,4 +12,6 @@ jobs:
       - run: echo auto merge
 
       - name: dump context
-        run: echo '${{ toJSON(github) }}'
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
