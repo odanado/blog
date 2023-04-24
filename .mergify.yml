@@ -1,0 +1,10 @@
+pull_request_rules:
+  - name: Automatic merge on approval
+    conditions:
+      - author=renovate[bot]
+      - check-success=build
+      - label=dependencies
+      - label=no build diff
+    actions:
+      merge:
+        method: merge
