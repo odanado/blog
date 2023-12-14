@@ -30,7 +30,7 @@ jobs:
         env:
           ORIGIN: https://blog.odan.dev
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ github.sha }}-main
           path: dist
@@ -51,7 +51,7 @@ jobs:
         env:
           ORIGIN: https://blog.odan.dev
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ github.sha }}-current
           path: dist
