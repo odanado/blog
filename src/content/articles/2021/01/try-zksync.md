@@ -154,7 +154,7 @@ console.log({ state });
 
 ```ts
 const amount = zksync.utils.closestPackableTransactionAmount(
-  ethers.utils.parseEther("0.01")
+  ethers.utils.parseEther("0.01"),
 );
 console.log({ amount });
 

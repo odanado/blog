@@ -20,7 +20,7 @@ export class ImageMatcher {
       img2.data,
       null,
       img1.width,
-      img1.height
+      img1.height,
     );
     const error = Math.round((100 * 100 * diffs) / (width * height)) / 100;
 
