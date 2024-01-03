@@ -23,7 +23,7 @@ jobs:
           cwd: ./
 
       - name: send metrics to GCP
-        run: npm run run-script ./src/scripts/send-metrics-to-gcp.ts
+        run: npx tsx ./src/scripts/send-metrics-to-gcp.ts
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
           GITHUB_REPOSITORY: ${{ github.repository }}
