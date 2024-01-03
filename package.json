@@ -2,6 +2,7 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "my blog",
+  "type": "module",
   "author": "odan",
   "private": true,
   "scripts": {
