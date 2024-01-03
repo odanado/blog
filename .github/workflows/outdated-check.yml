@@ -17,7 +17,7 @@ jobs:
       - run: npm ci
 
       - name: run outdate check
-        uses: odanado/outdate-check-action@v0.0.6
+        uses: odanado/outdate-check-action@v0.0.7
         id: outdate-check
         with:
           cwd: ./
