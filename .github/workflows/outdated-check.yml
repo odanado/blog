@@ -1,6 +1,8 @@
 name: "Outdated Check"
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "21 0 * * 0"
 
 jobs:
   outdated-check:
