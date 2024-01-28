@@ -28,7 +28,7 @@
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-astro": "0.31.3",
-    "npm-run-all2": "5.0.2",
+    "npm-run-all2": "6.1.1",
     "prettier": "3.2.2",
     "prettier-plugin-astro": "0.13.0",
     "tsx": "4.7.0"
