@@ -12,7 +12,7 @@
     "preview": "astro preview",
     "format": "prettier --write . --ignore-path .gitignore",
     "lint": "run-s lint:*",
-    "lint:eslint": "eslint --ext .js,.ts,.tsx,.astro src",
+    "lint:eslint": "eslint src",
     "lint:prettier": "prettier --check . --ignore-path .gitignore"
   },
   "dependencies": {
@@ -23,14 +23,17 @@
   },
   "devDependencies": {
     "@google-cloud/monitoring": "4.0.0",
-    "@typescript-eslint/eslint-plugin": "7.8.0",
+    "@types/eslint__js": "8.42.3",
+    "@types/eslint-config-prettier": "6.11.3",
     "@typescript-eslint/parser": "7.8.0",
-    "eslint": "8.57.0",
+    "eslint": "9.2.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-astro": "1.1.2",
     "npm-run-all2": "6.1.2",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "0.13.0",
-    "tsx": "4.10.0"
+    "tsx": "4.10.0",
+    "typescript": "5.4.5",
+    "typescript-eslint": "7.8.0"
   }
 }
