@@ -22,7 +22,7 @@
     "date-fns": "4.1.0"
   },
   "devDependencies": {
-    "@google-cloud/monitoring": "5.0.0",
+    "@google-cloud/monitoring": "5.0.1",
     "@types/eslint__js": "9.14.0",
     "@types/eslint-config-prettier": "6.11.3",
     "@typescript-eslint/parser": "8.26.1",
