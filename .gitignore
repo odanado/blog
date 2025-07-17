@@ -93,3 +93,8 @@ sw.*
 storybook-static
 
 .astro
+
+# Playwright Test
+test-results/
+playwright-report/
+test/e2e/visual-regression.spec.ts-snapshots/
