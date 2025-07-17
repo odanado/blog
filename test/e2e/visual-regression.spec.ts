@@ -25,13 +25,9 @@ test.describe("Visual Regression Tests", () => {
       await page.goto(`${PROD_URL}${targetPath}`, { waitUntil: "networkidle" });
       const prodScreenshot = await page.screenshot({ fullPage: true });
 
-      // Compare screenshots
-      expect(devScreenshot).toMatchSnapshot(
-        `${targetPath.replace(/\//g, "-")}-dev.png`,
-      );
-      expect(prodScreenshot).toMatchSnapshot(
-        `${targetPath.replace(/\//g, "-")}-prod.png`,
-      );
+      // Compare dev and prod screenshots directly
+      // This ensures they match each other, not a stored snapshot
+      expect(devScreenshot).toEqual(prodScreenshot);
     });
   }
 });
