@@ -1,88 +1,75 @@
-name: E2E Test Status Management
+name: E2E Tests
 
 on:
   pull_request:
     types: [opened, synchronize, labeled, unlabeled]
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
 
 jobs:
-  update-status:
-    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request'
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      statuses: write
-      pull-requests: read
+    
     steps:
-      - name: Get PR number
-        id: pr
-        uses: actions/github-script@v7
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          script: |
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.payload.workflow_run.id,
-            });
+          cache: npm
+          node-version-file: .node-version
 
-            const prNumber = context.payload.workflow_run.pull_requests[0]?.number;
-            if (!prNumber) {
-              core.setFailed('No PR number found');
-              return;
-            }
+      - name: npm ci
+        run: |
+          npm ci
+        env:
+          CI: true
 
-            core.setOutput('number', prNumber);
-            return prNumber;
+      - name: Run build
+        run: |
+          npm run build
+        env:
+          CI: true
+          ORIGIN: https://blog.odan.dev
 
-      - name: Check E2E test results
-        id: check-e2e
-        uses: actions/github-script@v7
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          script: |
-            const runId = context.payload.workflow_run.id;
-            const jobs = await github.rest.actions.listJobsForWorkflowRun({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: runId,
-            });
-
-            const e2eJob = jobs.data.jobs.find(job => job.name === 'build');
-            const e2eSteps = e2eJob?.steps || [];
-            const e2eTestStep = e2eSteps.find(step => step.name === 'Run e2e tests');
-
-            const e2eFailed = e2eTestStep?.conclusion === 'failure';
-            core.setOutput('failed', e2eFailed);
-
-            return e2eFailed;
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - name: Check for approval label
+        if: failure()
         id: check-label
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = '${{ steps.pr.outputs.number }}';
             const { data: pr } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: prNumber,
+              pull_number: context.issue.number,
             });
 
             const hasApprovalLabel = pr.labels.some(label => label.name === 'e2e-approved');
             core.setOutput('approved', hasApprovalLabel);
-
+            
             return hasApprovalLabel;
 
       - name: Update commit status
+        if: always()
         uses: actions/github-script@v7
         with:
           script: |
-            const e2eFailed = '${{ steps.check-e2e.outputs.failed }}' === 'true';
+            const e2eFailed = '${{ job.status }}' === 'failure';
             const isApproved = '${{ steps.check-label.outputs.approved }}' === 'true';
-            const sha = context.payload.workflow_run.head_sha;
-
+            
             let state, description;
-
+            
             if (e2eFailed && !isApproved) {
               state = 'pending';
               description = 'E2E tests failed - awaiting manual approval';
@@ -93,11 +80,11 @@ jobs:
               state = 'success';
               description = 'E2E tests passed';
             }
-
+            
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: sha,
+              sha: context.sha,
               state: state,
               description: description,
               context: 'E2E Tests',
