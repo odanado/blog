@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import { format } from "date-fns";
 import BaseLayout from "../../../../layouts/base-layout.astro";
 
 type Props = {
@@ -21,13 +22,17 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const pageTitle = `${entry.data.title} - odan blog`;
 const title = entry.data.title;
+const publishedAt = format(new Date(entry.data.publishedAt), "yyyy-MM-dd");
 const description = entry.body.trim().slice(0, 90);
 const { Content } = await entry.render();
 ---
 
 <BaseLayout title={pageTitle} description={description}>
   <article>
-    <h1>{title}</h1>
+    <header>
+      <h1>{title}</h1>
+      <time datetime={entry.data.publishedAt.toISOString()}>{publishedAt}</time>
+    </header>
     <Content />
   </article>
 </BaseLayout>
