@@ -25,13 +25,13 @@ jobs:
               repo: context.repo.repo,
               run_id: context.payload.workflow_run.id,
             });
-            
+
             const prNumber = context.payload.workflow_run.pull_requests[0]?.number;
             if (!prNumber) {
               core.setFailed('No PR number found');
               return;
             }
-            
+
             core.setOutput('number', prNumber);
             return prNumber;
 
@@ -46,14 +46,14 @@ jobs:
               repo: context.repo.repo,
               run_id: runId,
             });
-            
+
             const e2eJob = jobs.data.jobs.find(job => job.name === 'build');
             const e2eSteps = e2eJob?.steps || [];
             const e2eTestStep = e2eSteps.find(step => step.name === 'Run e2e tests');
-            
+
             const e2eFailed = e2eTestStep?.conclusion === 'failure';
             core.setOutput('failed', e2eFailed);
-            
+
             return e2eFailed;
 
       - name: Check for approval label
@@ -67,10 +67,10 @@ jobs:
               repo: context.repo.repo,
               pull_number: prNumber,
             });
-            
+
             const hasApprovalLabel = pr.labels.some(label => label.name === 'e2e-approved');
             core.setOutput('approved', hasApprovalLabel);
-            
+
             return hasApprovalLabel;
 
       - name: Update commit status
@@ -80,9 +80,9 @@ jobs:
             const e2eFailed = '${{ steps.check-e2e.outputs.failed }}' === 'true';
             const isApproved = '${{ steps.check-label.outputs.approved }}' === 'true';
             const sha = context.payload.workflow_run.head_sha;
-            
+
             let state, description;
-            
+
             if (e2eFailed && !isApproved) {
               state = 'pending';
               description = 'E2E tests failed - awaiting manual approval';
@@ -93,7 +93,7 @@ jobs:
               state = 'success';
               description = 'E2E tests passed';
             }
-            
+
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -126,9 +126,9 @@ jobs:
           script: |
             const sha = context.payload.pull_request.head.sha;
             const action = context.payload.action;
-            
+
             let state, description;
-            
+
             if (action === 'labeled') {
               state = 'success';
               description = 'E2E tests approved by reviewer';
@@ -149,7 +149,7 @@ jobs:
                 return;
               }
             }
-            
+
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
