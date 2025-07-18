@@ -4,10 +4,21 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, labeled, unlabeled]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Deploy if: push to main OR (PR and (not dependabot OR has deploy-preview label))
+    if: |
+      github.event_name == 'push' || 
+      (github.event_name == 'pull_request' && (
+        github.actor != 'dependabot[bot]' || 
+        contains(github.event.pull_request.labels.*.name, 'deploy-preview')
+      ))
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +38,7 @@ jobs:
           ORIGIN: https://blog.odan.dev
 
       - name: Deploy to Cloudflare Pages
+        id: cloudflare
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -34,3 +46,28 @@ jobs:
           projectName: blog
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # For pull requests, deploy to preview branch
+          branch: ${{ github.head_ref || github.ref_name }}
+
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.cloudflare.outputs.url }}';
+            const environment = '${{ steps.cloudflare.outputs.environment }}';
+
+            const comment = `## 🚀 Deployment Complete!
+
+            **Preview URL**: ${url}
+            **Environment**: ${environment}
+            **Branch**: \`${{ github.head_ref || github.ref_name }}\`
+
+            View the changes in your preview environment above.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
