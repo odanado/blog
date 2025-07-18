@@ -11,7 +11,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "format": "prettier --write . --ignore-path .gitignore",
-    "lint": "concurrently --sequential \"npm run lint:eslint\" \"npm run lint:prettier\"",
+    "lint": "concurrently -s -n eslint,prettier \"npm run lint:eslint\" \"npm run lint:prettier\"",
     "lint:eslint": "eslint src",
     "lint:prettier": "prettier --check . --ignore-path .gitignore",
     "test:e2e": "playwright test"
