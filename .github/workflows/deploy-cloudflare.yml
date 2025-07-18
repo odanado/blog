@@ -4,10 +4,21 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, labeled, unlabeled]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Deploy if: push to main OR (PR and (not dependabot OR has deploy-preview label))
+    if: |
+      github.event_name == 'push' || 
+      (github.event_name == 'pull_request' && (
+        github.actor != 'dependabot[bot]' || 
+        contains(github.event.pull_request.labels.*.name, 'deploy-preview')
+      ))
 
     steps:
       - uses: actions/checkout@v4
@@ -34,3 +45,5 @@ jobs:
           projectName: blog
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # For pull requests, deploy to preview branch
+          branch: ${{ github.head_ref || github.ref_name }}
