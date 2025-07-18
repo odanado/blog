@@ -12,7 +12,9 @@
       "Bash(npm run lint)",
       "Bash(npm run format:*)",
       "Bash(npx tsc:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(lsof:*)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }
