@@ -7,7 +7,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -57,7 +57,7 @@ jobs:
 
             const hasApprovalLabel = pr.labels.some(label => label.name === 'e2e-approved');
             core.setOutput('approved', hasApprovalLabel);
-            
+
             return hasApprovalLabel;
 
       - name: Update commit status
@@ -67,9 +67,9 @@ jobs:
           script: |
             const e2eFailed = '${{ job.status }}' === 'failure';
             const isApproved = '${{ steps.check-label.outputs.approved }}' === 'true';
-            
+
             let state, description;
-            
+
             if (e2eFailed && !isApproved) {
               state = 'pending';
               description = 'E2E tests failed - awaiting manual approval';
@@ -80,7 +80,7 @@ jobs:
               state = 'success';
               description = 'E2E tests passed';
             }
-            
+
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
