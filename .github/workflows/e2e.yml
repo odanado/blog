@@ -2,7 +2,7 @@ name: E2E Tests
 
 on:
   pull_request:
-    types: [opened, synchronize, labeled, unlabeled]
+    types: [opened, synchronize]
 
 jobs:
   test:
@@ -43,105 +43,9 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - name: Check for approval label
+      - name: Add e2e-rejected label on failure
         if: failure()
-        id: check-label
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-            });
-
-            const hasApprovalLabel = pr.labels.some(label => label.name === 'e2e-approved');
-            core.setOutput('approved', hasApprovalLabel);
-
-            return hasApprovalLabel;
-
-      - name: Update commit status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const e2eFailed = '${{ job.status }}' === 'failure';
-            const isApproved = '${{ steps.check-label.outputs.approved }}' === 'true';
-
-            let state, description;
-
-            if (e2eFailed && !isApproved) {
-              state = 'pending';
-              description = 'E2E tests failed - awaiting manual approval';
-            } else if (isApproved) {
-              state = 'success';
-              description = 'E2E tests approved by reviewer';
-            } else {
-              state = 'success';
-              description = 'E2E tests passed';
-            }
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: state,
-              description: description,
-              context: 'E2E Tests',
-            });
-
-  label-update:
-    if: github.event_name == 'pull_request' && (github.event.action == 'labeled' || github.event.action == 'unlabeled')
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write
-      pull-requests: read
-    steps:
-      - name: Check if e2e-approved label was added/removed
-        id: check-label-change
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [[ "${{ github.event.label.name }}" == "e2e-approved" ]]; then
-            echo "relevant=true" >> $GITHUB_OUTPUT
-          else
-            echo "relevant=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Update status if label changed
-        if: steps.check-label-change.outputs.relevant == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const sha = context.payload.pull_request.head.sha;
-            const action = context.payload.action;
-
-            let state, description;
-
-            if (action === 'labeled') {
-              state = 'success';
-              description = 'E2E tests approved by reviewer';
-            } else {
-              // Check if there were previous e2e failures
-              const statuses = await github.rest.repos.listCommitStatusesForRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: sha,
-              });
-              
-              const e2eStatus = statuses.data.find(status => status.context === 'E2E Tests');
-              if (e2eStatus && e2eStatus.description.includes('failed')) {
-                state = 'pending';
-                description = 'E2E tests failed - awaiting manual approval';
-              } else {
-                // No action needed if tests passed originally
-                return;
-              }
-            }
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: sha,
-              state: state,
-              description: description,
-              context: 'E2E Tests',
-            });
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "e2e-rejected"
