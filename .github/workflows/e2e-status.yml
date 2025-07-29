@@ -3,16 +3,30 @@ name: E2E Status Check
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled]
+  workflow_call:
+    inputs:
+      e2e_status:
+        description: "E2E test status (success, failure, skipped)"
+        required: false
+        type: string
+        default: ""
 
 jobs:
   check-e2e-status:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for e2e-rejected label
+      - name: Check for e2e-rejected label or failed status
         run: |
-          if [[ "${{ contains(github.event.pull_request.labels.*.name, 'e2e-rejected') }}" == "true" ]]; then
+          # Check if called from workflow_call with failed e2e tests
+          if [[ "${{ inputs.e2e_status }}" == "failure" ]]; then
+            echo "::error::E2E tests failed. E2E tests must pass before merging."
+            exit 1
+          fi
+
+          # Check if PR has e2e-rejected label (only for pull_request events)
+          if [[ "${{ github.event_name }}" == "pull_request" ]] && [[ "${{ contains(github.event.pull_request.labels.*.name, 'e2e-rejected') }}" == "true" ]]; then
             echo "::error::Pull request has 'e2e-rejected' label. E2E tests must pass before merging."
             exit 1
-          else
-            echo "✅ No 'e2e-rejected' label found"
           fi
+
+          echo "✅ E2E status check passed"
