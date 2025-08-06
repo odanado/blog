@@ -65,11 +65,11 @@ jobs:
       diff-exit-code: ${{ steps.diff-name-only.outputs.exitCode }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ github.sha }}-main
           path: dist-main
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ github.sha }}-current
           path: dist-current
