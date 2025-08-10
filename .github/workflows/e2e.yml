@@ -1,0 +1,62 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      e2e_test_outcome: ${{ steps.e2e-tests.outcome }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version-file: .node-version
+
+      - name: npm ci
+        run: |
+          npm ci
+        env:
+          CI: true
+
+      - name: Run build
+        run: |
+          npm run build
+        env:
+          CI: true
+          ORIGIN: https://blog.odan.dev
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run e2e tests
+        id: e2e-tests
+        run: npm run test:e2e
+        continue-on-error: true
+        env:
+          CI: true
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Add e2e-rejected label on failure
+        if: steps.e2e-tests.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "e2e-rejected"
+
+  call-status-check:
+    needs: test
+    if: always()
+    uses: ./.github/workflows/e2e-status.yml
+    with:
+      e2e_status: ${{ needs.test.outputs.e2e_test_outcome }}
