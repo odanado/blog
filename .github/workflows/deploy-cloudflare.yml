@@ -1,24 +1,26 @@
 name: Deploy to Cloudflare Pages
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
     types: [opened, synchronize, labeled, unlabeled]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "package.json"
+      - "package-lock.json"
+      - "astro.config.mjs"
+      - "tsconfig.json"
+      - ".node-version"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Deploy if: push to main OR (PR and (not dependabot OR has deploy-preview label))
+    # Deploy if: (not dependabot OR has deploy-preview label)
     if: |
-      github.event_name == 'push' || 
-      (github.event_name == 'pull_request' && (
-        github.actor != 'dependabot[bot]' || 
-        contains(github.event.pull_request.labels.*.name, 'deploy-preview')
-      ))
+      github.actor != 'dependabot[bot]' || 
+      contains(github.event.pull_request.labels.*.name, 'deploy-preview')
 
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +52,6 @@ jobs:
           branch: ${{ github.head_ref || github.ref_name }}
 
       - name: Comment PR with deployment URL
-        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
