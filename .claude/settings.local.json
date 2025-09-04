@@ -14,7 +14,19 @@
       "Bash(npx tsc:*)",
       "Bash(grep:*)",
       "Bash(lsof:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(gh label create:*)",
+      "Bash(prettier:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git checkout:*)",
+      "Bash(gh label:*)",
+      "Bash(gh api:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(git pull:*)",
+      "Bash(git mv:*)"
     ],
     "deny": []
   }
