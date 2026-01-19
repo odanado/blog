@@ -19,7 +19,7 @@
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
     "@exampledev/new.css": "1.1.3",
-    "astro": "4.8.2",
+    "astro": "5.15.9",
     "date-fns": "4.1.0"
   },
   "devDependencies": {
