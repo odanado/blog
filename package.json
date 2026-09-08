@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
-    "@types/pixelmatch": "5.2.6",
+    "@types/pixelmatch": "7.1.0",
     "@types/pngjs": "6.0.5",
     "@typescript-eslint/parser": "8.58.0",
     "concurrently": "10.0.5",
