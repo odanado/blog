@@ -33,7 +33,7 @@
     "eslint-plugin-astro": "3.2.1",
     "pixelmatch": "8.0.0",
     "pngjs": "7.0.0",
-    "prettier": "3.9.9",
+    "prettier": "3.9.10",
     "prettier-plugin-astro": "1.1.1",
     "typescript": "6.0.3",
     "typescript-eslint": "8.58.0"
